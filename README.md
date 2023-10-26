@@ -1,5 +1,5 @@
 # uniswap-universal-batcher
-Batch registering to Mongo DB from Universal-Router decoded Data in Ethereum
+Batch registering to Mongo DB from decoded Universal-Router Data in Ethereum
 
 # Installation and Run
 
