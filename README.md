@@ -82,3 +82,13 @@ L2_RPC_WEBSOCKET_URL=ws://localhost:9546
 # Will skip obtain L2 endpoint data
 ```
 
+5. Export environmental valuables
+```bash
+$  export $(cat .env | xargs)
+```
+
+6. Run the app
+```
+$ node runBatch.js
+```
+
