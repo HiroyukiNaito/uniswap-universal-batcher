@@ -8,17 +8,23 @@ Batch registering to Mongo DB from Universal-Router decoded Data in Ethereum
 sudo apt-get install -y mongodb-org
 ```
 
+This example sets
+
+- user: user
+- password: password
+- db: uniswapData
+
 ```bash
 set -e
 mongosh <<EOF
 use $MONGO_INITDB_DATABASE
 
 db.createUser({
-  user: '$MONGO_INITDB_USER',
-  pwd: '$MONGO_INITDB_PWD',
+  user: user,
+  pwd: password,
   roles: [{
     role: 'readWrite',
-    db: '$MONGO_INITDB_DATABASE'
+    db: uniswapData
   }]
 })
 EOF
