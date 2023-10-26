@@ -1,3 +1,4 @@
+"use strict";
 // Importing modules
 const ethers = require("ethers");
 const mongoose = require("mongoose");
@@ -52,12 +53,14 @@ const daysToBlock = (currentBlock, daysAgo, l1Orl2) => {
 
 // block call separation   
 const callBlockSeparation = (pastBlockNumber, currentBlockNumber, rangeSize) => {
+    const  createRangesArray = (start, end, rangeSize) => 
+       (start > end) 
+       ? [] 
+       : [[start, Math.min(start + rangeSize - 1, end)], ...createRangesArray(Math.min(start + rangeSize - 1, end) + 1, end, rangeSize)];
+
     (pastBlockNumber > currentBlockNumber) 
     ? (() => {throw new Error('pastBlockNumber is greater than currentBlockNumber')})()
-    : createRangesArray = (start, end, rangeSize) => 
-        (start > end) 
-        ? [] 
-        :  [[start, Math.min(start + rangeSize - 1, end)], ...createRangesArray(Math.min(start + rangeSize - 1, end) + 1, end, rangeSize)]
+    : createRangesArray (pastBlockNumber, currentBlockNumber, rangeSize);
     return  (currentBlockNumber - pastBlockNumber < rangeSize ) ?  [[pastBlockNumber, currentBlockNumber]] : createRangesArray(pastBlockNumber, currentBlockNumber, rangeSize)
 }
 // Designated day to Block
