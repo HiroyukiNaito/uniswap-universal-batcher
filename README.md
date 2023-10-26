@@ -84,7 +84,7 @@ L2_RPC_WEBSOCKET_URL=ws://localhost:9546
 
 5. Export environmental valuables
 ```bash
-$  export $(cat .env | xargs)
+$ export $(cat .env | xargs)
 ```
 
 6. Run the app
