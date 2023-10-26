@@ -18,7 +18,7 @@ This example sets
 ```bash
 set -e
 mongosh <<EOF
-use $MONGO_INITDB_DATABASE
+use uniswapData
 
 db.createUser({
   user: user,
