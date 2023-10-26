@@ -2,7 +2,8 @@
 Batch registering to Mongo DB from Universal-Router decoded Data in Ethereum
 
 # Installation and Run
- 1. Install Mongo DB and create Database
+
+## 1. Install Mongo DB and create Database
 
 ```bash
 sudo apt-get install -y mongodb-org
@@ -30,13 +31,13 @@ db.createUser({
 EOF
 ```
  
- 2. Install Node Js
+##  2. Install Node Js
 
 ```bash
 $ sudo apt install nodejs
 ```
 
-3. Install uniswap-universal-decoder
+## 3. Install uniswap-universal-decoder
 
 ```bash
 $ cd ./[application execute path]
@@ -45,7 +46,7 @@ $ cd uniswap-universal-decoder
 $ yarn install 
 ```
 
-4. Install uniswap-universal-batcher
+## 4. Install uniswap-universal-batcher
 
 ```bash
 $ cd ./[application execute path]
@@ -54,7 +55,7 @@ $ cd uniswap-universal-batcher
 $ yarn install 
 ```
 
-5. Set environmental valuables of uniswap-universal-batcher
+## 5. Set environmental valuables of uniswap-universal-batcher
 
 ```bash
 $ vi .env
@@ -109,12 +110,12 @@ L2_RPC_WEBSOCKET_URL=ws://localhost:9546
 # Will skip obtain L2 endpoint data
 ```
 
-5. Export environmental valuables
+## 6. Export environmental valuables
 ```bash
 $ export $(cat .env | xargs)
 ```
 
-6. Run the app
+## 7. Run the app
 ```bash
 $ node runBatch.js
 ```
