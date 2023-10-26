@@ -32,4 +32,37 @@ $ yarn install
 ```bash
 $ vi .env
 ```
+```bash
+# Mongo DB name you want to store 
+MONGODB_DB=uniswapData
+# Mongo DB user you want to use
+MONGODB_USER=user
+# Mongo DB password you designated
+MONGODB_PASSWORD=password
+# Mongo DB host url or IP address
+MONGODB_HOST=localhost
+# Node.js heap size
+NODE_OPTIONS="--max-old-space-size=4046"
+# Request block size in parallel (async)
+BLOCK_RANGE_SIZE=1
+# Retrive Days (from now)
+RETRIEVE_DAYS=0.001
+# Pause time per requests
+WAIT_TIME=1000
+# Request block size in parallel (async) in L2 block
+L2_BLOCK_RANGE_SIZE=7
+# Retrive Days (from now) in L2 block
+L2_RETRIEVE_DAYS=0.001
+# Pause time per requests in L2 block
+L2_WAIT_TIME=1000
+# L1 Uniswap Universal Router Address
+UNIVERSAL_ROUTER_ADDRESS=0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD
+# Your L1 Websocket RPC endpoint url 
+RPC_WEBSOCKET_URL=ws://localhost:8546
+# L2 Uniswap Universal Router Address
+L2_UNIVERSAL_ROUTER_ADDRESS=0x198EF79F1F515F02dFE9e3115eD9fC07183f02fC
+# Your L2 Websocket RPC endpoint url
+# If you don't have L2 RPC endpoint please assign empty value (ex. L2_RPC_WEBSOCKET_URL="")
+L2_RPC_WEBSOCKET_URL=ws://localhost:9546
+```
 
