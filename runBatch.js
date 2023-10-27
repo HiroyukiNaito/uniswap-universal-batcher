@@ -24,5 +24,10 @@ const args2 = {
     "wss": process.env.L2_RPC_WEBSOCKET_URL
 }
 
-process.env.RPC_WEBSOCKET_URL ? registerBulk(args) : logger.info("No RPC settings! So, L1 Batch Skipping");
-process.env.L2_RPC_WEBSOCKET_URL ? registerBulk(args2) : logger.info("No L2RPC settings! So, L2 Batch Skipping");
+process.env.RPC_WEBSOCKET_URL
+ ? registerBulk(args)
+ : logger.info("No RPC settings! So, L1 Batch Skipping");
+
+process.env.L2_RPC_WEBSOCKET_URL
+ ? registerBulk(args2)
+ : logger.info("No L2RPC settings! So, L2 Batch Skipping");
