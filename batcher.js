@@ -3,7 +3,14 @@
 const ethers = require("ethers");
 const mongoose = require("mongoose");
 const pino = require('pino');
-const logger = pino({});
+const logger = pino({
+  level: process.env.PINO_LOG_LEVEL || 'info',
+  formatters: {
+    bindings: (bindings) => ({ pid: bindings.pid, host: bindings.hostname }),
+    level: (label) => ({ level: label.toUpperCase()}),
+    },
+    timestamp: pino.stdTimeFunctions.isoTime,
+});
 const util = require("util");
 const {
     hasUniswapCommands,
@@ -59,21 +66,21 @@ const callBlockSeparation = (pastBlockNumber, currentBlockNumber, rangeSize) => 
        : [[start, Math.min(start + rangeSize - 1, end)], ...createRangesArray(Math.min(start + rangeSize - 1, end) + 1, end, rangeSize)];
 
     (pastBlockNumber > currentBlockNumber) 
-    ? (() => {throw new Error('pastBlockNumber is greater than currentBlockNumber')})()
-    : createRangesArray (pastBlockNumber, currentBlockNumber, rangeSize);
+       ? (() => {throw new Error('pastBlockNumber is greater than currentBlockNumber')})()
+       : createRangesArray (pastBlockNumber, currentBlockNumber, rangeSize);
     return  (currentBlockNumber - pastBlockNumber < rangeSize ) ?  [[pastBlockNumber, currentBlockNumber]] : createRangesArray(pastBlockNumber, currentBlockNumber, rangeSize)
 }
 // Designated day to Block
 const daysToBlockRangeArray = async (args) => {
-        const wssUrl = args["wss"];
-        const layer = args["layer"];
-        const days = args["retrieveDays"]
-        const rangeSize = args["blockRangeSize"]
-        const provider = new ethers.WebSocketProvider(wssUrl);
-        const currentBlock = await provider.getBlockNumber();
-        const startBlock = daysToBlock(currentBlock, days, layer);
-        const blockRangeArray =  callBlockSeparation(startBlock, currentBlock, rangeSize);
-        return blockRangeArray
+    const wssUrl = args["wss"];
+    const layer = args["layer"];
+    const days = args["retrieveDays"]
+    const rangeSize = args["blockRangeSize"]
+    const provider = new ethers.WebSocketProvider(wssUrl);
+    const currentBlock = await provider.getBlockNumber();
+    const startBlock = daysToBlock(currentBlock, days, layer);
+    const blockRangeArray =  callBlockSeparation(startBlock, currentBlock, rangeSize);
+    return blockRangeArray
 
 }
 // getBlockHeaderList
@@ -108,9 +115,10 @@ const batchRegister = async (args, blockHeaderList, collection) => {
                       const fullData = Object.assign({}, txnData, {"decodedData": decodedData,"blockHeader": blockHeader, "createdAt": new Date()})
                       const jsonData = JSON.stringify(fullData, (_, v) => typeof v === 'bigint' ? v.toString() : v);
                       // Block Receipt Registering
-                      await collection.insertOne(JSON.parse(jsonData))
-                          .then(result => logger.info({insertedId: result["insertedId"]},`${layer}: Block hush ${j} receipt inserted`))
-                          .catch(err => logger.error(err, `${layer}: Block hush ${j} receipt insert error`));
+                      const result = await collection.insertOne(JSON.parse(jsonData))
+                          .then(result => logger.info({insertedId: result["insertedId"]},`Layer: ${layer}, Block: ${txnData["blockNumber"]}, Hush: ${j}, decoded data inserted`))
+                          .catch(err => logger.error(err, `Layer: ${layer}, Block: ${txnData["blockNumber"]}, Hush: ${j}, decoded data insert error!`));
+                          
                       })()
                     : null;                   
             }));
@@ -149,7 +157,8 @@ module.exports = {
     callBlockSeparation,
     daysToBlockRangeArray,
     getBlockHeaderList,
-    registerBulk
+    registerBulk,
+    logger
 };
 
 

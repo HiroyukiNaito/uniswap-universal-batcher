@@ -1,8 +1,8 @@
 const {
-    registerBulk
+    registerBulk,
+    logger
 } = require("./batcher");
-const pino = require('pino');
-const logger = pino({});
+
 
 // setting arguments
 const args = {
