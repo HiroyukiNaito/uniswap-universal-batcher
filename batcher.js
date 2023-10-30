@@ -23,7 +23,7 @@ const connectMongo = async (collectionName) => {
     const db = process.env.MONGODB_DB;
     const user = process.env.MONGODB_USER;
     const pass = process.env.MONGODB_PASSWORD;
-    const mongodb_host = process.env.MONGODB_HOST;
+    const mongodb_host = process.env.MONGODB_SERVER;
     const database =`mongodb://${user}:${pass}@${mongodb_host}:27017/${db}`;
     await mongoose.connect(database)
     .then(() => 
