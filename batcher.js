@@ -112,7 +112,7 @@ const batchRegister = async (args, blockHeaderList, collection) => {
                   (txnData["to"] === router && hasUniswapCommands(txnData["data"])) 
                     ? (async () => {
                       const decodedData =  uniswapFullDecodedInput(txnData["data"]);
-                      const fullData = {...txnData, "decodedData": decodedData,"blockHeader": blockHeader, "createdAt": new Date()}
+                      const fullData = {...txnData, "decodedData": decodedData, "blockHeader": blockHeader, "createdAt": new Date()}
                       const jsonData = JSON.stringify(fullData, (_, v) => typeof v === 'bigint' ? v.toString() : v);
                       // Block Receipt Registering
                       const result = await collection.insertOne(JSON.parse(jsonData))
