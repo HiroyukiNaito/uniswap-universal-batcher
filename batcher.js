@@ -141,8 +141,10 @@ const registerBulk = async (args) => {
             const blockHeaderList = await getBlockHeaderList(args, startBlock, endBlock);
             await batchRegister(args,blockHeaderList, collection);
             await sequenceCall(index -1, fn);
-            } catch(err) {
+            }
+            catch(err) {
             logger.fatal(err, `Layer: ${layer} Network Connection Problem Happend!`);
+            await sequenceCall(index -1, fn);
             }
         }, delay)) : index;
     }
