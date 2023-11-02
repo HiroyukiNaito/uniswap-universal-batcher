@@ -80,6 +80,7 @@ const daysToBlockRangeArray = async (args) => {
     const currentBlock = await provider.getBlockNumber();
     const startBlock = daysToBlock(currentBlock, days, layer);
     const blockRangeArray =  callBlockSeparation(startBlock, currentBlock, rangeSize);
+    provider.destroy();
     return blockRangeArray
 
 }
@@ -94,6 +95,7 @@ const getBlockHeaderList = async (args, startBlock, endBlock) => {
            const blockHeader = await provider.getBlock(i);
            return blockHeader 
            }));
+    provider.destroy();
     return blockHeaderList
 }
 
@@ -124,9 +126,10 @@ const batchRegister = async (args, blockHeaderList, collection) => {
                     : null;                   
             }));
     })); 
+    provider.destroy();    
     } catch(err) {
-             logger.error(err, `Layer: ${layer} Network Connection Problem Happend!`)
-    }    
+    logger.error(err, `Layer: ${layer} Network Connection Problem Happend!`);
+    }
 };
 // Bulk registering logic
 const registerBulk = async (args) => {
