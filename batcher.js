@@ -117,13 +117,14 @@ const batchRegister = async (args, blockHeaderList, collection) => {
                       const fullData = {...txnData, "decodedData": decodedData, "blockHeader": blockHeader, "createdAt": new Date()}
                       const jsonData = JSON.stringify(fullData, (_, v) => typeof v === 'bigint' ? v.toString() : v);
                       // Block Receipt Registering
-                      const result = await collection.insertOne(JSON.parse(jsonData))
+                      await collection.insertOne(JSON.parse(jsonData))
                           .then(result => logger.info({insertedId: result["insertedId"]},`Layer: ${layer}, Block: ${txnData["blockNumber"]}, Hush: ${j}, decoded data inserted`))
                           .catch(err => logger.error(err, `Layer: ${layer}, Block: ${txnData["blockNumber"]}, Hush: ${j}, decoded data insert error!`));
                           
                       })()
                     : null;                   
             }));
+    await provider.destroy();
     }));  
 };
 // Bulk registering logic
