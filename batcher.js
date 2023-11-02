@@ -128,7 +128,7 @@ const batchRegister = async (args, blockHeaderList, collection) => {
     })); 
     provider.destroy();    
     } catch(err) {
-    logger.error(err, `Layer: ${layer} Network Connection Problem Happend!`);
+    logger.fatal(err, `Layer: ${layer} Network Connection Problem Happend!`);
     }
 };
 // Bulk registering logic
