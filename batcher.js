@@ -102,6 +102,7 @@ const batchRegister = async (args, blockHeaderList, collection) => {
     const router = args["router"];
     const wssUrl = args["wss"];
     const layer = args["layer"];
+    try {
     const provider = new ethers.WebSocketProvider(wssUrl); 
     await Promise.all(blockHeaderList.map(async (i) => {
             const blockHeader = i;
@@ -122,8 +123,10 @@ const batchRegister = async (args, blockHeaderList, collection) => {
                       })()
                     : null;                   
             }));
-    }));
-         
+    })); 
+    } catch(err) {
+             logger.error(err, `Layer: ${layer} Network Connection Problem Happend!`)
+    }    
 };
 // Bulk registering logic
 const registerBulk = async (args) => {
@@ -144,7 +147,7 @@ const registerBulk = async (args) => {
         }, delay)) : index;
     }
     return await sequenceCall((blockRangeArray.length -1) , (index)=> {
-        logger.info(`${layer} Remaining Job : ${index}`);
+        logger.info(`${layer} Remaining Job: ${index}`);
          (index === 0) ? logger.info(`${layer} Batch job successfully ended`)  : null ;
     });
 }
