@@ -80,7 +80,6 @@ const daysToBlockRangeArray = async (args) => {
     const currentBlock = await provider.getBlockNumber();
     const startBlock = daysToBlock(currentBlock, days, layer);
     const blockRangeArray =  callBlockSeparation(startBlock, currentBlock, rangeSize);
-    await provider.destroy();
     return blockRangeArray
 
 }
@@ -95,7 +94,6 @@ const getBlockHeaderList = async (args, startBlock, endBlock) => {
            const blockHeader = await provider.getBlock(i);
            return blockHeader 
            }));
-    await provider.destroy();
     return blockHeaderList
 }
 
@@ -124,7 +122,6 @@ const batchRegister = async (args, blockHeaderList, collection) => {
                       })()
                     : null;                   
             }));
-    await provider.destroy();
     }));  
 };
 // Bulk registering logic
